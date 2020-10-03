@@ -1,0 +1,196 @@
+package kr.co.mySpring;
+
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import org.junit.Test;
+
+public class mailTest {
+	
+	@Test
+	public void mailTest() 
+	{
+		 	String user 	= "foxacsco@gmail.com"; // 네이버일 경우 네이버 계정, gmail경우 gmail 계정
+	        String password = "qudwls#1";   		// 패스워드
+
+	        // SMTP 서버 정보를 설정한다.
+	        Properties prop = new Properties();
+	        prop.put("mail.smtp.host", "smtp.gmail.com"); 
+	        prop.put("mail.smtp.port", 465); 
+	        prop.put("mail.smtp.auth", "true"); 
+	        prop.put("mail.smtp.ssl.enable", "true"); 
+	        prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+	        
+	        Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
+	            protected PasswordAuthentication getPasswordAuthentication() {
+	                return new PasswordAuthentication(user, password);
+	            }
+	        });
+
+	        try {
+	            MimeMessage message = new MimeMessage(session);
+	            message.setFrom(new InternetAddress(user));
+
+	            //수신자메일주소
+	            message.addRecipient(Message.RecipientType.TO, new InternetAddress("foxacsco@gmail.com")); 
+
+	            // Subject
+	            message.setSubject("테스트입니다."); //메일 제목을 입력
+
+	            // Text
+	            message.setContent("<!DOCTYPE html>" + 
+	            		"<html>" + 
+	            		"<head>" + 
+	            		"<meta charset=\"UTF-8\">" + 
+	            		"<title>Insert title here</title>" + 
+	            		"</head>" + 
+	            		"<body>" + 
+	            		"	<div>" + 
+	            		"		<div class=\"adM\"></div>" + 
+	            		"		<table style=\"width: 600px\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">" + 
+	            		"			<thead>" + 
+	            		"				<tr>" + 
+	            		"					<th scope=\"col\" colspan=\"5\"" + 
+	            		"						style=\"height: 36px; background-color: #535562; color: #fff; font-weight: bold; text-align: left\">" + 
+	            		"						<span" + 
+	            		"						style=\"display: inline-block; font-family: dotum, helvetica, sans-serif; font-size: 16px; padding-left: 13px\">hi</span><span" + 
+	            		"						style=\"display: inline-block; font-family: dotum, helvetica, sans-serif; font-size: 12px\">WORKS</span>" + 
+	            		"					</th>" + 
+	            		"				</tr>" + 
+	            		"				<tr>" + 
+	            		"					<th scope=\"col\" colspan=\"5\"" + 
+	            		"						style=\"height: 3px; background-color: #0d8ef0\"></th>" + 
+	            		"				</tr>" + 
+	            		"			</thead>" + 
+	            		"			<tbody>" + 
+	            		"				<tr>" + 
+	            		"					<td colspan=\"5\" style=\"vertical-align: top; height: 27px\"></td>" + 
+	            		"				</tr>" + 
+	            		"				<tr>" + 
+	            		"					<td colspan=\"5\"" + 
+	            		"						style=\"font-family: dotum, helvetica, sans-serif; font-size: 12px; padding-left: 13px; line-height: 1.5\">" + 
+	            		"						안녕하세요. 하이웍스 입니다.<br> <span" + 
+	            		"						style=\"display: inline-block; color: #5389b1\">회원님은 하이웍스 이용을" + 
+	            		"							위하여 이메일 주소 인증을 요청하였습니다.</span><br> 아래 인증 번호를 입력하여 확인해주세요." + 
+	            		"					</td>" + 
+	            		"				</tr>" + 
+	            		"				<tr>" + 
+	            		"					<td colspan=\"5\" style=\"height: 30px\"></td>" + 
+	            		"				</tr>" + 
+	            		"				<tr>" + 
+	            		"					<td style=\"width: 138px\"></td>" + 
+	            		"					<td colspan=\"3\"" + 
+	            		"						style=\"width: 228px; height: 50px; color: #fff; font-family: dotum, helvetica, sans-serif; font-size: 15px; background-color: #6b7586; padding-left: 77px\">인증번호" + 
+	            		"						: <span style=\"display: inline-block; font-weight: bold\">867087</span>" + 
+	            		"					</td>" + 
+	            		"					<td style=\"width: 157px\"></td>" + 
+	            		"				</tr>" + 
+	            		"				<tr>" + 
+	            		"					<td style=\"width: 137px\"></td>" + 
+	            		"					<td style=\"width: 1px; background-color: #e1e1e1\"></td>" + 
+	            		"					<td" + 
+	            		"						style=\"width: 228px; height: 50px; color: #7d7d7d; font-family: dotum, helvetica, sans-serif; font-size: 12px; background-color: #f6f9fe; padding-left: 66px\">생성일시" + 
+	            		"						: 2020-09-28 00:00:33</td>" + 
+	            		"					<td style=\"width: 1px; background-color: #e1e1e1\"></td>" + 
+	            		"					<td style=\"width: 156px\"></td>" + 
+	            		"				</tr>" + 
+	            		"				<tr>" + 
+	            		"					<td style=\"width: 137px\"></td>" + 
+	            		"					<td style=\"width: 1px; background-color: #c2c2c2\"></td>" + 
+	            		"					<td style=\"width: 305px; height: 1px; background-color: #c2c2c2\"></td>" + 
+	            		"					<td style=\"width: 1px; background-color: #c2c2c2\"></td>" + 
+	            		"					<td style=\"width: 156px\"></td>" + 
+	            		"				</tr>" + 
+	            		"				<tr>" + 
+	            		"					<td colspan=\"5\" style=\"height: 29px\"></td>" + 
+	            		"				</tr>" + 
+	            		"				<tr>" + 
+	            		"					<td colspan=\"5\">" + 
+	            		"						<table style=\"width: 600px\" cellspacing=\"0\" cellpadding=\"0\"" + 
+	            		"							border=\"0\">" + 
+	            		"							<tbody>" + 
+	            		"								<tr>" + 
+	            		"									<td style=\"height: 1px; width: 1px; background-color: #e1e1e1\"></td>" + 
+	            		"									<td" + 
+	            		"										style=\"height: 1px; width: 598px; background-color: #e1e1e1\"></td>" + 
+	            		"									<td style=\"height: 1px; width: 1px; background-color: #e1e1e1\"></td>" + 
+	            		"								</tr>" + 
+	            		"								<tr>" + 
+	            		"									<td style=\"height: 52px; width: 1px; background-color: #e1e1e1\"></td>" + 
+	            		"									<td" + 
+	            		"										style=\"height: 52px; background-color: #fbfbfb; color: #7d7d7d; font-family: dotum, helvetica, sans-serif; font-size: 11px; padding-left: 13px; line-height: 1.3\">" + 
+	            		"										본 메일은 하이웍스 서비스 이용에 관한 안내와 공지를 위한 메일입니다.<br>따라서 본 메일에는 수신" + 
+	            		"										거부 장치가 장착되어 있지 않습니다.만약 회원님이 요청한 메일이 아니라면 무시해주세요." + 
+	            		"									</td>" + 
+	            		"									<td style=\"height: 52px; width: 1px; background-color: #e1e1e1\"></td>" + 
+	            		"								</tr>" + 
+	            		"								<tr>" + 
+	            		"									<td style=\"height: 1px; width: 1px; background-color: #c2c2c2\"></td>" + 
+	            		"									<td" + 
+	            		"										style=\"height: 1px; width: 598px; background-color: #c2c2c2\"></td>" + 
+	            		"									<td style=\"height: 1px; width: 1px; background-color: #c2c2c2\"></td>" + 
+	            		"								</tr>" + 
+	            		"							</tbody>" + 
+	            		"						</table>" + 
+	            		"					</td>" + 
+	            		"				</tr>" + 
+	            		"			</tbody>" + 
+	            		"" + 
+	            		"			<tfoot>" + 
+	            		"				<tr>" + 
+	            		"					<td colspan=\"5\" style=\"height: 10px\"></td>" + 
+	            		"				</tr>" + 
+	            		"				<tr>" + 
+	            		"					<td colspan=\"5\"" + 
+	            		"						style=\"color: #000; font-family: dotum, helvetica, sans-serif; padding-left: 13px\">" + 
+	            		"						<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">" + 
+	            		"							<tbody>" + 
+	            		"								<tr>" + 
+	            		"									<td width=\"27%\" valign=\"top\"><span" + 
+	            		"										style=\"font-size: 12px; font-weight: bold; color: #959595\"><span" + 
+	            		"											style=\"font-size: 15px\">hi</span><span" + 
+	            		"											style=\"font-size: 11px\">WORKS</span> ⓒ GABIA INC.</span></td>" + 
+	            		"									<td" + 
+	            		"										style=\"color: #7d7d7d; font-family: dotum, helvetica, sans-serif; font-size: 11px; padding-left: 13px; line-height: 1.3\">" + 
+	            		"										(주)가비아 <span style=\"color: #e1e1e1\">|</span> 경기도 성남시 분당구 삼평동" + 
+	            		"										670번지 유스페이스1 B동 4층, 5층<br> 대표이사 김홍국 <span" + 
+	            		"										style=\"color: #e1e1e1\">|</span> 대표전화 : 1661-4370 <span" + 
+	            		"										style=\"color: #e1e1e1\">|</span> 사업자등록번호 : 214-86-39239<br>" + 
+	            		"										통신판매업 신고번호 : 제2012-경기성남-1188" + 
+	            		"									</td>" + 
+	            		"								</tr>" + 
+	            		"							</tbody>" + 
+	            		"						</table>" + 
+	            		"					</td>" + 
+	            		"				</tr>" + 
+	            		"			</tfoot>" + 
+	            		"		</table>" + 
+	            		"" + 
+	            		"		<img" + 
+	            		"			src=\"https://ci3.googleusercontent.com/proxy/X3n4y8l-xVyGcAEHZa6_qKIsIKjK_0V_jN-_M3xmo1A5lcXen1bMldkvADQP5csVlG6PbyMblQzUrpsxcrKJ4E7JlrUgCE65WPpm7KXE7YVg2dAEcmWVCNVUcE-vrsY=s0-d-e1-ft#http://receiptnoti.gabia.com/recv.php?m=1&amp;c=e22cb166f0af8aca8345a2081706f705\"" + 
+	            		"			width=\"0\" height=\"0\" class=\"CToWUd\">" + 
+	            		"	</div>" + 
+	            		"</body>" + 
+	            		"</html>","text/html; charset=UTF-8");    //메일 내용을 입력
+
+	            // send the message
+	            Transport.send(message); ////전송
+	            System.out.println("message sent successfully...");
+	        } catch (AddressException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        } catch (MessagingException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+	}
+	
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- mysql 설정 -->
+	<bean id = "dataSource" 
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
+		<property name="url" 			 value="${jdbc.url}"></property>
+		<property name="username" 		 value="${jdbc.username}"></property>
+		<property name="password" 		 value="${jdbc.password}"></property>
+	</bean>
+	
+	
+	<!-- 마이바티스 주요 객체  sessionFactory클래스 빈등록 -->
+	<bean id = "sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property> 		 <!-- 마이바티스 설정 파일을 변수 configLocation에 저장 -->
+		<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>	 <!-- sql문이 작성될 xml파일이 들어간 경로 저장 [ (sql관리하는 )xml의 xxMapper로 지정해야한다. ] -->
+	</bean>
+	
+	<!-- sessionTemplate는 개발자들이 연결을 맺고 종료하는 작업을 줄일 수 있게 해준다. ==> sqlsessionFactory의 생성자로 주입해서 설정한다 -->
+	<bean id = "sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg name = "sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+	 
+	 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	 
+	<!-- properties 파일 로딩하기 -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+	
+	<!-- <util:properties id="emailInfo" location="classpath:/config/config.properties"/> -->
+	
+	<!-- [컴포넌트 자동 스캔 명령] -->
+    <!-- <context:component-scan base-package="kr.co.mySpring" /> -->
+    
+</beans>

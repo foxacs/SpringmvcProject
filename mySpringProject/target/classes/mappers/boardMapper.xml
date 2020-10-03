@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- mybatis-config.xml에  <typeAliases> 를 추가하면 패키지(kr.co.mySpring.vo) 없이 클래스 명만 사용가능 -->
+<!-- 독타입 선언 (반드시 작성) => 이곳이 매퍼라고 알려주는 선언 -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace = "kr.co.mapper.boardMapper">
+   
+   <!-- 게시글 갯수 조회 쿼리 -->
+   <select id = "boardCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+	  	SELECT count(*)
+	  	FROM board
+	  	WHERE title LIKE CONCAT('%',#{keyword},'%')
+  </select>
+  
+  <!-- 특정회원 게시글 갯수 조회 쿼리 -->
+  <select id = "userBoardCount" parameterType="kr.co.mySpring.vo.BoardVO" resultType="java.lang.Integer">
+	  	SELECT count(*)
+	  	FROM board
+	  	WHERE title LIKE CONCAT('%',#{keyword},'%')
+	  	AND mem_idx = (select mem_idx from member where mem_userid = #{mem_userid})
+  </select>
+  
+  <!-- 게시글 조회 쿼리 -->
+  <select id = "boardList" parameterType="map" resultType="java.util.HashMap">
+	  	select bd.board_key, bd.mem_idx, bd.title, bd.content, date_format(bd.update_date,'%Y-%m-%d %H:%i:%s') as update_date, (select mem_userid from member where mem_idx = bd.mem_idx) as mem_userid
+		  from board bd
+	  	 where title LIKE CONCAT('%',#{keyword},'%')
+	  	 order by update_date desc
+	  	 limit #{fromRowNum},#{pageCount}
+  </select>
+  
+  <!-- 특정회원 게시글 조회 쿼리 -->
+  <select id = "userBoardList" parameterType="map" resultType="java.util.HashMap">
+	  	select bd.board_key, bd.mem_idx, bd.title, bd.content, date_format(bd.update_date,'%Y-%m-%d %H:%i:%s') as update_date, (select mem_userid from member where mem_idx = bd.mem_idx) as mem_userid
+		  from board bd
+	  	 where mem_idx = (select mem_idx from member where mem_userid = #{mem_userid})
+	  	 and title LIKE CONCAT('%',#{keyword},'%')
+	  	 order by update_date desc
+	  	 limit #{fromRowNum},#{pageCount}
+  </select>
+  
+  <!-- 게시글 상세보기 쿼리 -->
+  <select id = "detailBoard" parameterType="java.lang.String" resultType="java.util.HashMap">
+	  	select bd.board_key, bd.mem_idx, bd.title, bd.content, date_format(bd.update_date,'%Y-%m-%d %H:%i:%s') as update_date, (select mem_userid from member where mem_idx = bd.mem_idx) as mem_userid
+		from board bd
+	  	where bd.board_key = #{board_key}
+  </select>
+  
+    <!-- 게시글 상세보기 쿼리 -->
+  <select id = "insertBoard" parameterType="kr.co.mySpring.vo.BoardVO" resultType="java.lang.Integer">
+  		insert into board (title, content, mem_idx) 
+  		values(#{title}, #{content}, (select mem_idx from member where mem_userid = #{mem_userid}))
+  </select>
+  
+  <select id = "deleteBoard" parameterType="kr.co.mySpring.vo.BoardVO" resultType="java.lang.Integer">
+  		delete from board where board_key = #{board_key}
+  </select>
+ 
+  <select id = "updateBoard" parameterType="kr.co.mySpring.vo.BoardVO" resultType="java.lang.Integer">
+  		update board set 
+  		title = #{title}, 
+  		content = #{content},
+  		update_date = now()
+  		where board_key = #{board_key}
+  </select>
+ 
+</mapper>
