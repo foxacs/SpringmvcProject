@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- mybatis-config.xml에  <typeAliases> 를 추가하면 패키지(kr.co.mySpring.vo) 없이 클래스 명만 사용가능 -->
+<!-- 독타입 선언 (반드시 작성) => 이곳이 매퍼라고 알려주는 선언 -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace = "kr.co.mapper.replyMapper">
+   
+   <!-- 댓글 갯수 조회 쿼리 -->
+   <select id = "replyCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+	  	select count(*)
+		from reply
+		where board_key =#{board_key}
+		and is_delete='N'
+  </select>
+  
+  <!-- 댓글 조회 -->
+  <select id = "replyList" parameterType="map" resultType="java.util.HashMap">
+	  	select reply_key, 
+		 	   board_key, 
+		 	   mem_idx, 
+		 	   (select mem_userid from member where mem_idx = rp.mem_idx) as user_id,
+		 	   comment,
+		 	   depth,
+		 	   group_key,
+		 	   date_format(update_date,'%Y-%m-%d %H:%i:%s') as update_date,
+		 	   target_mem_idx,
+		 	   (select mem_userid from member where mem_idx = rp.target_mem_idx) as target_id
+		from reply rp
+		where board_key =#{board_key} 
+		and is_delete='N'
+		order by group_key asc, reply_key asc 
+		limit #{fromRowNum},#{pageCount}
+  </select>
+
+</mapper>

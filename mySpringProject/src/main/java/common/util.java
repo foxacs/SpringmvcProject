@@ -1,5 +1,6 @@
 package common;
 
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
 
@@ -62,7 +63,7 @@ public class util {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email)); 
 
             //메일 제목을 입력
-            message.setSubject("SIDE PROJECT : 지원서 로그인 인증번호 안내"); 
+            message.setSubject("SIDE PROJECT : 회원가입 인증번호 안내"); 
 
             //메일 내용을 입력
             message.setContent("<!DOCTYPE html>" + 
@@ -144,6 +145,40 @@ public class util {
 	}
 
 	
-/*		System.out.println(email);*/
+	public static String formatTimeString(Date tempDate) 
+	{
+		int sec   = 60;
+		int min   = 60;
+		int hour  = 24;
+		int day   = 30;
+		int month = 12;
+		
+		long curTime = System.currentTimeMillis();
+		long regTime = tempDate.getTime();
+		long diffTime = (curTime - regTime) / 1000;
 
+		String msg = "";
+		
+		if (diffTime < sec) {
+			// sec
+			msg = "방금 전";
+		} else if ((diffTime /= sec) < min) {
+			// min
+			msg = diffTime + "분 전";
+		} else if ((diffTime /= min) < hour) {
+			// hour
+			msg = (diffTime) + "시간 전";
+		} else if ((diffTime /= hour) < day) {
+			// day
+			msg = (diffTime) + "일 전";
+		} else if ((diffTime /= day) < month) {
+			// day
+			msg = (diffTime) + "달 전";
+		} else {
+			msg = (diffTime) + "년 전";
+		}
+		
+		return msg;
+	}
+	
 }
