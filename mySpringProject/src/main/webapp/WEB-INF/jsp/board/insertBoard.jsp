@@ -25,7 +25,7 @@
 	
     <div class="container">
     	<div class="page-header">
-    		<textarea class='textbox input_title' id ='title' placeholder='제목을 입력해 주세요'></textarea>
+    		<textarea class='input_title textbox' id ='title' placeholder='제목을 입력해 주세요'></textarea>
     	</div>
       	
       	<div class="page-header">

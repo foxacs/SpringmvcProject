@@ -332,7 +332,7 @@ var join = {
 			success : function(resultData) {
 				if(resultData.Result.ResultCode == "Y") {
 					alert(resultData.Result.ResultMessage);
-					location.href = "/";
+					window.location.replace("/");
 				}else {
 					alert(resultData.Result.ResultMessage);
 					return false;

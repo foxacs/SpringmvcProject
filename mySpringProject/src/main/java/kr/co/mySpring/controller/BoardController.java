@@ -21,8 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.mySpring.service.BoardServiceImpl;
+import kr.co.mySpring.service.ReplyServiceImpl;
 import kr.co.mySpring.vo.BoardVO;
 import kr.co.mySpring.vo.MemberVO;
+import kr.co.mySpring.vo.ReplyVO;
 
 
 @Controller
@@ -154,8 +156,6 @@ public class BoardController {
 			tempJson = jsonArray.getJSONObject(0);
 		}
 		
-		System.out.println(tempJson.toString());
-		
 		String board_key 	= tempJson.has("board_key"	) == false ? "" : String.valueOf(tempJson.getInt("board_key"));
 		String title 		= tempJson.has("title"		) == false ? "" : tempJson.getString("title");
 		String content 		= tempJson.has("content"	) == false ? "" : tempJson.getString("content");
@@ -181,6 +181,4 @@ public class BoardController {
 	
 		return service.updateBoard(vo);
 	}
-	
-	
 }

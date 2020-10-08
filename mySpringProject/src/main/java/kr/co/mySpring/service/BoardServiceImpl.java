@@ -44,10 +44,10 @@ public class BoardServiceImpl implements BoardService{
 		try {
 			long start = System.currentTimeMillis(); 
 			
-			String keyword 		= vo.getKeyword();
-			String currentCount = vo.getCurrentCount();
-			String pageCount	= vo.getPageCount();
-			String mem_userid	= vo.getMem_userid();
+			String keyword 		= vo.getKeyword();			// 검색어
+			String currentCount = vo.getCurrentCount();		// 현재 페이지
+			String pageCount	= vo.getPageCount();		// 페이지 당 출력 갯수 
+			String mem_userid	= vo.getMem_userid();		// 회원 id(내가 쓴 글 조회를 위한 param)
 			
 			Map<String, Object> contents = new HashMap<>();
 			Map<String, Object> resultMap= new HashMap<>();
@@ -74,8 +74,11 @@ public class BoardServiceImpl implements BoardService{
 			//2. 결과 갯 수 구하기
 			int totalCount = 0;
 			
+			// 전체 조회
 			if(mem_userid == null) {
 				totalCount = dao.listCount(keyword);
+			
+			// 내가쓴글 조회
 			}else {
 				totalCount = dao.userListCount(vo);
 			}
@@ -114,16 +117,19 @@ public class BoardServiceImpl implements BoardService{
 			map.put("pageCount", Integer.parseInt(pageCount));
 			
 			//6. 검색 결과에 따른 리스트 검색
+			// 전체 조회
 			if(mem_userid == null) 
 			{
 				list = dao.list(map);
-			}else {
+			
+			// 내가쓴글 조회
+			}else {	
 				map.put("mem_userid", mem_userid);
 				list = dao.userlist(map);
 			}
 			
 			if(list == null) {
-				JsonMessage.getResponseMessage("N", "errorMsg","[SQL_ERROR]settingList");
+				return JsonMessage.getResponseMessage("N", "errorMsg","[SQL_ERROR]list");
 			}
 			
 			contents.put("DataList"		, list);
@@ -201,7 +207,7 @@ public class BoardServiceImpl implements BoardService{
 	}	
 	
 	/************************************************************************************************
-	* <pre>게시판 조회 서비스</pre>
+	* <pre>이미지 업로드 서비스</pre>
 	* 
 	* @param  1. HttpServletRequest req, HttpServletResponse resp, MultipartFile upload
 	* @return 2. JSONObject
@@ -241,7 +247,7 @@ public class BoardServiceImpl implements BoardService{
 			out = new FileOutputStream(new File(uploadPath));
 			out.write(bytes);
 
-			String fileUrl = "http://220.72.127.82:8090/img/" + fileName;
+			String fileUrl = "http://121.161.228.140:8090/img/" + fileName;
 
 			json.put("uploaded", 1);
 			json.put("fileName", fileName);

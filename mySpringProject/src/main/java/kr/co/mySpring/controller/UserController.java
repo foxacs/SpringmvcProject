@@ -22,7 +22,6 @@ public class UserController {
 	public String login() throws Exception {
 		
 		return service.loginCheck();
-		/*return "login/login";*/
 	}
 
 	//회원가입 페이지
