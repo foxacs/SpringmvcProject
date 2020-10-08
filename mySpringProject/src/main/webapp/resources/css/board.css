@@ -1,3 +1,29 @@
+.reply-page-header {
+    padding: 20px 0 20px;
+    border-bottom: 1px solid #eee;
+    text-align:left;
+}
+
+.reply-background{
+	background: #f8f9fa;
+}
+
+.reply-div-depth1 {
+    margin-left:20px;
+}
+
+.reply-div-depth2 { 
+    margin-left:35px;
+}
+
+.reply-div{
+	margin-top:5px;
+}
+
+.reply-btn{
+	margin-top:15px;
+}
+
 .input_content{
 	width: 100%;
 	height: 650px;
@@ -19,6 +45,14 @@
     outline: 0 none;
     line-height: 40px;
     letter-spacing: -.4px;
+}
+
+.reply_btn{
+	width : 120px;
+	height: 40px;
+	font-weight : bolder;
+	margin-top : 5px;
+	margin-bottom : 10px;
 }
 
 .insert_btn{

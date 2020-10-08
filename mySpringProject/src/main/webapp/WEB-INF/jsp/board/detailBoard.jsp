@@ -34,10 +34,40 @@
     	</div>
 		
 		<div class="p-right">
-			<input type='button' class='insert_btn' onclick='javascript:history.back()' value='취소'>
+		
+		<div style="text-align:left; margin-bottom:5px">댓글 0개</div>
+		
+			<textarea class='input_title' id ='reply' placeholder='댓글을 입력해 주세요'></textarea>
+			
+			<input type='button' class='reply_btn' id = "reply_btn" onclick='javascript:history.back()' value='댓글 달기'>
+			<div style = "border-bottom: 1px solid #eee;"></div>
+			
+			<div class = "reply-page-header">
+				<div>kdh359 | 1분 전</div>
+				<div class='reply-div'>이건 정말 아니지 않나 싶다</div>
+				
+				<div class="reply-btn">
+						<input type="button" value="답글달기">
+						<input type="button" value="수정">
+						<input type="button" value="삭제">
+						
+				</div>
+			</div>
+			<div class="reply-page-header reply-background">
+				<div class="reply-div-depth1">└ kdh359 | 1분 전</div>
+				<div class="reply-div reply-div-depth2">이건 정말 아니지 않나 싶다</div>
+			</div>
+			<div class = "reply-page-header" >
+				<div>kdh359 | 1분 전</div>
+				<div class="reply-div">이건 정말 아니지 않나 싶다</div>
+			</div>
+			<div class = "reply-page-header">
+				<div>kdh359 | 1분 전</div>
+				<div class="reply-div">이건 정말 아니지 않나 싶다</div>
+			</div>
+			<div style = "border-bottom: 1px solid #eee;"></div>
 		</div>
 		
-       
     </div>
    
     <%@include file ="../common/footer.jsp" %>
